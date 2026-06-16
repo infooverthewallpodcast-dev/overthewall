@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Over The Wall — The Official Podcast</title>
+  <meta name="description" content="Over The Wall: oltre ogni muro c'è una storia da raccontare. Podcast talk/calcio. Guarda, ascolta e seguici ovunque." />
+  <meta name="theme-color" content="#0B0B0C" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <!-- ===== SEO / Social (sostituisci https://tuodominio.com con il dominio reale) ===== -->
+  <link rel="canonical" href="https://tuodominio.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Over The Wall" />
+  <meta property="og:title" content="Over The Wall — The Official Podcast" />
+  <meta property="og:description" content="Oltre ogni muro c'è una storia da raccontare. Guarda, ascolta e seguici ovunque." />
+  <meta property="og:image" content="https://tuodominio.com/assets/logo-light.png" />
+  <meta property="og:url" content="https://tuodominio.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Over The Wall — The Official Podcast" />
+  <meta name="twitter:description" content="Oltre ogni muro c'è una storia da raccontare." />
+  <meta name="twitter:image" content="https://tuodominio.com/assets/logo-light.png" />
+
+  <!-- ===== Tailwind CSS (CDN) ===== -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- ===== Lucide Icons (CDN) — icone generiche (play, mail, ecc.) ===== -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- ===== Font Awesome Brands (CDN) — icone ufficiali social ===== -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <!-- ===== Fonts: Anton (display) + Montserrat (body) ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- ===== Tailwind config: palette brand ===== -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red:   '#E31B23', // Rosso fuoco (logo)
+              ink:   '#0B0B0C', // Nero
+              paper: '#F4F4F2', // Bianco sporco (sfondo)
+            }
+          },
+          fontFamily: {
+            display: ['Anton', 'sans-serif'],
+            sans:    ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ===== Sfondo CHIARO: bianco sporco + pattern mattoni grigio chiaro + glow rosso ===== */
+    body {
+      background-color: #F4F4F2;
+      background-image:
+        radial-gradient(1100px 560px at 50% -10%, rgba(227,27,35,0.10), transparent 60%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.045) 0 1px, transparent 1px 46px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0 1px, transparent 1px 120px);
+      background-attachment: fixed;
+    }
+    /* overlay giunti sfalsati = look muro (su card scure) */
+    .brick-overlay::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 120px);
+      background-position: 60px 23px; border-radius: inherit;
+    }
+    /* overlay mattoni scuri su card chiare */
+    .brick-overlay-dark::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 40px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 110px);
+      background-position: 0 0, 55px 20px; border-radius: inherit;
+    }
+    .title-stroke { letter-spacing: 0.02em; }
+
+    /* ===== BENTO CHIARE (default): bianco, bordo scuro, hover lift + glow rosso ===== */
+    .bento {
+      position: relative;
+      background: #FFFFFF;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 20px;
+      transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease;
+      overflow: hidden; display: block;
+      box-shadow: 0 6px 20px -12px rgba(0,0,0,0.25);
+    }
+    .bento:hover {
+      transform: translateY(-4px);
+      border-color: rgba(227,27,35,0.55);
+      box-shadow: 0 20px 50px -14px rgba(227,27,35,0.40), 0 0 0 1px rgba(227,27,35,0.30);
+    }
+    /* ===== BENTO SCURE (a contrasto): TEXTURE MURO MATTONATO ===== */
+    .bento-dark {
+      /* overlay scuro + glow rosso soft SOPRA la foto del muro = profondità + testo leggibile */
+      background:
+        linear-gradient(160deg, rgba(11,11,12,0.78), rgba(11,11,12,0.92)),
+        radial-gradient(120% 80% at 80% 0%, rgba(227,27,35,0.18), transparent 55%),
+        url('assets/wall.jpg');
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #fff;
+    }
+    /* card muro "piena": texture più visibile (meno overlay) per le sezioni-chiave */
+    .wall-feature {
+      background:
+        linear-gradient(160deg, rgba(11,11,12,0.55), rgba(11,11,12,0.78)),
+        url('assets/wall.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .bento-dark:hover {
+      border-color: rgba(227,27,35,0.65);
+      box-shadow: 0 20px 50px -14px rgba(227,27,35,0.50), 0 0 0 1px rgba(227,27,35,0.30);
+    }
+    .bento-spotify:hover {
+      border-color: rgba(30,215,96,0.65);
+      box-shadow: 0 20px 50px -14px rgba(30,215,96,0.45), 0 0 0 1px rgba(30,215,96,0.30);
+    }
+
+    .play-pulse { transition: transform .3s ease, box-shadow .3s ease; }
+    .bento:hover .play-pulse {
+      transform: scale(1.08);
+      box-shadow: 0 0 0 10px rgba(227,27,35,0.12), 0 0 40px rgba(227,27,35,0.5);
+    }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-thumb { background: #c9c9c5; border-radius: 10px; }
+  </style>
+</head>
+
+<body class="font-sans text-brand-ink antialiased selection:bg-brand-red selection:text-white">
+
+  <!-- ===================== BENTO GRID ===================== -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-5 py-5 sm:py-7">
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5 lg:auto-rows-[168px]">
+
+      <!-- ============ 1) HERO (2x2) — CHIARA, logo trasparente ============ -->
+      <div class="bento brick-overlay-dark sm:col-span-2 lg:row-span-2 p-5 sm:p-6 flex flex-col justify-between gap-2.5">
+        <div class="relative z-10 flex flex-col items-center text-center">
+          <span class="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-brand-red">
+            <i data-lucide="radio" class="w-3.5 h-3.5"></i> The Official Podcast
+          </span>
+          <img src="assets/logo-light.png" alt="Over The Wall — The Official Podcast" class="my-0.5 h-24 sm:h-32 w-auto object-contain" onerror="this.style.display='none'" />
+          <p class="text-sm sm:text-base text-black/75 font-semibold leading-snug">
+            «Oltre ogni muro c'è una storia da raccontare.»
+          </p>
+          <p class="mt-1 text-xs text-black/50 font-medium">Scrivici e raccontaci la tua. 🎙️</p>
+        </div>
+
+        <!-- CTA primarie -->
+        <div class="relative z-10 flex flex-col sm:flex-row gap-2.5">
+          <a href="https://www.youtube.com/@overthewallofficial" target="_blank" rel="noopener"
+             class="flex-1 inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-red-600 text-white font-bold text-sm px-4 py-2.5 rounded-xl transition shadow-lg shadow-brand-red/30">
+            <i class="fa-brands fa-youtube"></i> Ultimo episodio
+          </a>
+          <a href="https://open.spotify.com/show/6iVGgeVR7kIVPfbmB86Rbh" target="_blank" rel="noopener"
+             class="flex-1 inline-flex items-center justify-center gap-2 bg-brand-ink hover:bg-black text-white font-bold text-sm px-4 py-2.5 rounded-xl transition">
+            <i class="fa-brands fa-spotify text-[#1ED760]"></i> Spotify
+          </a>
+        </div>
+
+        <!-- mini-icone social -->
+        <div class="relative z-10 flex items-center justify-center gap-2.5 pt-2.5 border-t border-black/10">
+          <span class="text-[11px] font-semibold text-black/40 mr-0.5">Seguici su</span>
+          <a href="https://www.youtube.com/@overthewallofficial" target="_blank" rel="noopener" aria-label="YouTube" class="h-8 w-8 rounded-full bg-black/5 hover:bg-[#FF0000] hover:text-white border border-black/10 flex items-center justify-center transition text-sm"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.instagram.com/overthewallofficial/" target="_blank" rel="noopener" aria-label="Instagram" class="h-8 w-8 rounded-full bg-black/5 hover:bg-[#d62976] hover:text-white border border-black/10 flex items-center justify-center transition text-sm"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@overthewallofficial?_r=1&_t=zn-91jclkarjqk" target="_blank" rel="noopener" aria-label="TikTok" class="h-8 w-8 rounded-full bg-black/5 hover:bg-black hover:text-white border border-black/10 flex items-center justify-center transition text-sm"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://open.spotify.com/show/6iVGgeVR7kIVPfbmB86Rbh" target="_blank" rel="noopener" aria-label="Spotify" class="h-8 w-8 rounded-full bg-black/5 hover:bg-[#1ED760] hover:text-black border border-black/10 flex items-center justify-center transition text-sm"><i class="fa-brands fa-spotify"></i></a>
+        </div>
+      </div>
+
+      <!-- ============ 2) YOUTUBE (2x1) — SCURA ============ -->
+      <a href="https://www.youtube.com/@overthewallofficial" target="_blank" rel="noopener"
+         class="bento bento-dark brick-overlay sm:col-span-2 p-4 sm:p-5 group flex items-center gap-4">
+        <div class="relative z-10 w-2/5 aspect-video rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/10 to-black/70 shrink-0">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="play-pulse h-12 w-12 rounded-full bg-brand-red flex items-center justify-center"><i data-lucide="play" class="w-6 h-6 text-white"></i></div>
+          </div>
+          <span class="absolute top-2 left-2 inline-flex items-center gap-1 text-[10px] font-semibold bg-black/60 px-2 py-0.5 rounded"><i class="fa-brands fa-youtube text-[#FF0000]"></i> Ultimo episodio</span>
+        </div>
+        <div class="relative z-10 flex-1 min-w-0">
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FF0000]"><i class="fa-brands fa-youtube"></i> Video</span>
+          <h3 class="mt-1 font-display text-xl sm:text-2xl uppercase leading-none">Guarda su YouTube</h3>
+          <p class="mt-1.5 text-xs text-white/55 leading-snug">Episodi integrali e interviste con gli ospiti.</p>
+          <span class="mt-3 inline-flex items-center gap-2 bg-[#FF0000] text-white font-bold text-xs px-4 py-2.5 rounded-lg"><i class="fa-brands fa-youtube"></i> Guarda gli episodi</span>
+        </div>
+      </a>
+
+      <!-- ============ 3) SPOTIFY (quadrato 1x1) — SCURA ============ -->
+      <a href="https://open.spotify.com/show/6iVGgeVR7kIVPfbmB86Rbh" target="_blank" rel="noopener" class="bento bento-dark bento-spotify p-4 sm:p-5 flex flex-col justify-between group">
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#1ED760]"><i class="fa-brands fa-spotify text-sm"></i> Audio</span>
+          <h3 class="mt-2 font-display text-xl uppercase leading-none">Ascolta su<br>Spotify</h3>
+          <p class="mt-1.5 text-xs text-white/55 leading-snug">Tutti gli episodi, ovunque vuoi.</p>
+        </div>
+        <span class="mt-3 inline-flex items-center justify-center gap-2 w-full bg-[#1ED760] text-black font-bold text-xs px-3 py-2.5 rounded-lg"><i class="fa-brands fa-spotify"></i> Ascolta ora</span>
+      </a>
+
+      <!-- ============ 4) TIKTOK (quadrato 1x1) — SCURA muro ============ -->
+      <a href="https://www.tiktok.com/@overthewallofficial?_r=1&_t=zn-91jclkarjqk" target="_blank" rel="noopener"
+         class="bento bento-dark wall-feature p-4 sm:p-5 flex flex-col justify-between group">
+        <div class="relative z-10">
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white"><i class="fa-brands fa-tiktok text-sm"></i> Shorts</span>
+          <h3 class="mt-2 font-display text-xl uppercase leading-none">Seguici su<br>TikTok</h3>
+          <p class="mt-1.5 text-xs text-white/55 leading-snug">Le clip più virali in 60 secondi.</p>
+        </div>
+        <span class="relative z-10 mt-3 inline-flex items-center justify-center gap-2 w-full bg-white/10 group-hover:bg-white/20 border border-white/10 text-white font-bold text-xs px-3 py-2.5 rounded-lg transition"><i data-lucide="zap" class="w-4 h-4 text-brand-red"></i> Guarda le clip</span>
+      </a>
+
+      <!-- ============ 5) INSTAGRAM (2x1) — CHIARA ============ -->
+      <a href="https://www.instagram.com/overthewallofficial/" target="_blank" rel="noopener"
+         class="bento brick-overlay-dark sm:col-span-2 p-4 sm:p-5 group flex items-center gap-4">
+        <div class="relative z-10 flex-1 min-w-0">
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-black/40"><i class="fa-brands fa-instagram text-sm"></i> Community · 591 follower</span>
+          <h3 class="mt-1 font-display text-xl sm:text-2xl uppercase leading-none">Seguici su <span class="text-brand-red">Instagram</span></h3>
+          <p class="mt-1.5 text-xs text-black/55 font-medium leading-snug">Dietro le quinte, ospiti e novità.</p>
+          <div class="mt-3 flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-black/60 bg-black/5 px-2.5 py-1 rounded-full whitespace-nowrap"><i data-lucide="users" class="w-3.5 h-3.5"></i> Ospiti</span>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-black/60 bg-black/5 px-2.5 py-1 rounded-full whitespace-nowrap"><i data-lucide="mic" class="w-3.5 h-3.5"></i> Episodi</span>
+            <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-black/60 bg-black/5 px-2.5 py-1 rounded-full whitespace-nowrap"><i data-lucide="brick-wall" class="w-3.5 h-3.5"></i> Chi siamo</span>
+          </div>
+        </div>
+        <span class="relative z-10 shrink-0 self-center inline-flex items-center gap-2 bg-brand-ink text-white group-hover:bg-brand-red font-bold text-xs px-4 py-2.5 rounded-lg transition">Seguici <i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+      </a>
+
+      <!-- ============ 6) RACCONTA LA TUA STORIA (quadrato 1x1) — ROSSA ============ -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc5ijfENBVPDzXZKiD5JN7aNNtSDwjP14AnBlw5Uv9tarf9GQ/viewform"
+         target="_blank" rel="noopener"
+         class="bento p-4 sm:p-5 group flex flex-col justify-between text-white"
+         style="background:linear-gradient(160deg,#E31B23,#9e0f15); border-color:rgba(255,255,255,0.25);">
+        <div class="relative z-10">
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white"><i data-lucide="megaphone" class="w-4 h-4"></i> Partecipa</span>
+          <h3 class="mt-2 font-display text-xl uppercase leading-none">Racconta<br>la tua storia</h3>
+          <p class="mt-1.5 text-xs text-white/85 font-medium leading-snug">Potresti essere il prossimo ospite.</p>
+        </div>
+        <span class="relative z-10 mt-3 inline-flex items-center justify-center gap-2 w-full bg-white text-brand-red font-bold text-xs px-3 py-2.5 rounded-lg group-hover:bg-brand-ink group-hover:text-white transition"><i data-lucide="send" class="w-4 h-4"></i> Proponi la storia</span>
+      </a>
+
+      <!-- ============ 7) GOFUNDME (quadrato 1x1) — CHIARA ============ -->
+      <a href="https://www.gofundme.com/f/supportaci-con-una-donazione?attribution_id=sl:316f9814-9c59-48c9-a62c-1507d35f88d7&lang=it_IT&ts=1770689797&utm_campaign=man_sharesheet_dash&utm_medium=customer&utm_source=copy_link"
+         target="_blank" rel="noopener"
+         class="bento p-4 sm:p-5 group flex flex-col justify-between">
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#00b964]"><i class="fa-solid fa-hand-holding-heart"></i> Supporto</span>
+          <h3 class="mt-2 font-display text-xl uppercase leading-none">Sostieni<br>il progetto</h3>
+          <p class="mt-1.5 text-xs text-black/55 font-medium leading-snug">Ogni contributo fa la differenza.</p>
+        </div>
+        <span class="mt-3 inline-flex items-center justify-center gap-2 w-full bg-[#00b964] text-white font-bold text-xs px-3 py-2.5 rounded-lg group-hover:bg-[#00a857] transition"><i class="fa-solid fa-heart"></i> Dona su GoFundMe</span>
+      </a>
+
+      <!-- ============ 8) CONTATTI (4x1 full width) — SCURA muro ============ -->
+      <div id="contatti" class="bento bento-dark wall-feature sm:col-span-2 lg:col-span-4 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="relative z-10">
+          <span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-brand-red font-bold"><i data-lucide="handshake" class="w-4 h-4"></i> Collaborazioni</span>
+          <h3 class="mt-1 font-display text-xl sm:text-2xl uppercase leading-none">Lavoriamo insieme</h3>
+          <p id="email" class="mt-1.5 text-base sm:text-lg font-semibold select-all text-white break-all">info@overthewallpodcast.com</p>
+        </div>
+        <div class="relative z-10 flex gap-2.5 shrink-0">
+          <button type="button" onclick="copyEmail()"
+                  class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/15 text-white font-semibold text-sm px-4 py-3 rounded-xl transition">
+            <i data-lucide="copy" class="w-4 h-4"></i> <span id="copyLabel">Copia</span>
+          </button>
+          <a href="mailto:info@overthewallpodcast.com"
+             class="inline-flex items-center gap-2 bg-brand-red hover:bg-red-600 text-white font-semibold text-sm px-5 py-3 rounded-xl transition shadow-lg shadow-brand-red/30">
+            <i data-lucide="mail" class="w-4 h-4"></i> Scrivici
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-black/50 font-medium">
+      <p>© 2026 Over The Wall — The Official Podcast</p>
+      <div class="flex items-center gap-5 text-lg">
+        <a href="https://www.instagram.com/overthewallofficial/" target="_blank" rel="noopener" aria-label="Instagram" class="hover:text-[#d62976] transition"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@overthewallofficial" target="_blank" rel="noopener" aria-label="YouTube" class="hover:text-[#FF0000] transition"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/@overthewallofficial?_r=1&_t=zn-91jclkarjqk" target="_blank" rel="noopener" aria-label="TikTok" class="hover:text-black transition"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://open.spotify.com/show/6iVGgeVR7kIVPfbmB86Rbh" target="_blank" rel="noopener" aria-label="Spotify" class="hover:text-[#1ED760] transition"><i class="fa-brands fa-spotify"></i></a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    lucide.createIcons();
+    function copyEmail() {
+      const email = document.getElementById('email').textContent.trim();
+      navigator.clipboard.writeText(email).then(() => {
+        const label = document.getElementById('copyLabel');
+        const old = label.textContent;
+        label.textContent = 'Copiata! ✓';
+        setTimeout(() => label.textContent = old, 1800);
+      });
+    }
+  </script>
+</body>
+</html>
